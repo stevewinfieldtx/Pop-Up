@@ -1,12 +1,9 @@
-/* Page */
 .page {
   min-height: 100vh;
   background: #1a1208;
   color: #e8d9b8;
   font-family: Georgia, 'Times New Roman', serif;
 }
-
-/* Header */
 .header {
   text-align: center;
   padding: 32px 24px 20px;
@@ -23,23 +20,19 @@
   font-size: 13px;
   color: #a08850;
   font-style: italic;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
-
-/* Main layout */
 .main {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 440px 1fr;
   gap: 24px;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 24px;
 }
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .main { grid-template-columns: 1fr; }
 }
-
-/* Cards */
 .card {
   background: #241c0e;
   border: 1px solid #4a3418;
@@ -48,16 +41,14 @@
   margin-bottom: 16px;
 }
 .cardTitle {
-  font-size: 12px;
+  font-size: 11px;
   color: #c4a060;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border-bottom: 1px solid #3a2a10;
   padding-bottom: 10px;
   margin-bottom: 14px;
 }
-
-/* Scene selector */
 .sceneGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -70,7 +61,7 @@
   border-radius: 6px;
   color: #a08850;
   font-family: Georgia, serif;
-  font-size: 13px;
+  font-size: 12px;
   padding: 9px 10px;
   cursor: pointer;
   text-align: left;
@@ -80,7 +71,26 @@
 .sceneBtnActive { border-color: #c4903c !important; color: #f5e6c0 !important; background: #2a1e0a !important; }
 .sceneRef { font-size: 11px; color: #6a5030; font-style: italic; text-align: right; margin-top: 4px; }
 
-/* Form elements */
+.styleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.styleBtn {
+  background: #160f06;
+  border: 1px solid #4a3418;
+  border-radius: 6px;
+  color: #a08850;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.styleBtn:hover { border-color: #8B6030; color: #e8d9b8; }
+.styleBtnActive { border-color: #c4903c !important; color: #f5e6c0 !important; background: #2a1e0a !important; }
+
 .label {
   display: block;
   font-size: 11px;
@@ -114,13 +124,11 @@
   padding: 9px 11px;
   outline: none;
   resize: vertical;
-  line-height: 1.5;
+  line-height: 1.6;
   transition: border-color 0.15s;
   box-sizing: border-box;
 }
 .textarea:focus { border-color: #b8963c; }
-
-/* Option buttons */
 .optionGroup { display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
 .optionBtn {
   background: #160f06;
@@ -142,8 +150,6 @@
 .optionLabel { font-weight: 500; }
 .optionDesc { font-size: 11px; color: #6a5030; font-style: italic; }
 .optionBtnActive .optionDesc { color: #a08850; }
-
-/* Generate button */
 .generateBtn {
   width: 100%;
   background: linear-gradient(135deg, #7a5228, #c4903c);
@@ -159,15 +165,13 @@
 }
 .generateBtn:hover { opacity: 0.88; }
 .generateBtn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-/* Result */
 .result { position: sticky; top: 24px; align-self: start; }
 .bookWrap {
   background: #241c0e;
   border: 1px solid #4a3418;
   border-radius: 10px;
   padding: 20px;
-  min-height: 400px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -211,7 +215,7 @@
   background: linear-gradient(to bottom, #8B6030, #c4a060, #8B6030);
   transform: translateX(-50%);
   z-index: 2;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 .bookImg { width: 100%; display: block; }
 .bookCaption {
@@ -223,12 +227,6 @@
 }
 .captionText { font-size: 14px; font-style: italic; color: #c4a060; line-height: 1.6; margin-bottom: 4px; }
 .captionRef { font-size: 11px; color: #6a5030; letter-spacing: 0.05em; }
-.bookMeta {
-  margin-top: 10px;
-  font-size: 11px;
-  color: #6a5030;
-  font-style: italic;
-  text-align: center;
-}
+.bookMeta { margin-top: 10px; font-size: 11px; color: #6a5030; font-style: italic; text-align: center; }
 .downloadLink { color: #a08850; text-decoration: none; }
 .downloadLink:hover { color: #c4a060; }
