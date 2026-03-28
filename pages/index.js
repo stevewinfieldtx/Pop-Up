@@ -2,40 +2,44 @@ import { useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+const POPUP_PREFIX = `Macro photography of a real physical 3D paper pop-up book lying open, shot from slightly above at eye level. White book pages are visible flat on the table. From the center spine, cardstock figures stand UPRIGHT and PERPENDICULAR to the page surface on accordion-fold paper tabs. Multiple layers of die-cut paper create true foreground, midground, and background depth. Hard shadows cast onto the white page from standing paper elements. This is NOT a flat illustration — it is a PHYSICAL paper sculpture being photographed. Scene: `
+
+const POPUP_SUFFIX = `. Technical: sharp studio lighting, real paper texture visible, paper edges and folds clearly visible, depth of field blur on foreground elements, photorealistic paper craft photography`
+
 const SCENES = {
   loaves: {
     label: '🐟 Loaves & Fishes',
-    prompt: "A stunning 3D paper pop-up book spread photographed at eye level, showing the miracle of loaves and fishes. Center stage: Jesus figure cut from cardstock standing upright perpendicular to the open book pages, arms raised, surrounded by crowd figures on accordion-fold tabs at varying heights. Foreground: fish and bread loaves on folded paper platforms. Background arch: rolling hills die-cut from layered cardstock in receding greens and blues. Golden rays fan out from a foil sun. Paper engineering style, highly detailed paper craft, studio photography lighting, white book pages visible, sharp shadows showing true 3D depth, Hallmark pop-up book quality",
+    scene: `Jesus figure cut from illustrated cardstock stands upright on a center tab, arms raised, surrounded by five smaller crowd figures on angled accordion tabs. Foreground: a basket of bread and two paper fish on a low platform tab. Background: three layers of rolling hills die-cut from green and blue cardstock recede into distance. A yellow foil sun on the back panel. Warm golden light`,
     caption: 'He took the five loaves and two fish, looked up to heaven, gave thanks — and all were fed.',
     reference: 'Matthew 14:13–21'
   },
   david: {
     label: '⭐ David & Goliath',
-    prompt: "A stunning 3D paper pop-up book spread photographed at eye level, showing David facing Goliath. Giant Goliath figure cut from thick cardstock stands tall on the right, accordion-folded legs giving true 3D height. Small David figure on the left holds a sling cut from thin paper. Valley of Elah landscape rises in layered die-cut cardstock hills behind them, armies on each side on folded tabs. Paper engineering style, intricate paper craft construction, studio photography lighting, white book pages visible at base, dramatic shadows showing real 3D depth, Hallmark pop-up book quality",
+    scene: `Small David figure on the left tab holds a paper sling. Towering Goliath figure on the right stands three times taller, cut from thick cardstock with a painted shield and spear. Valley floor is yellow-green layered paper. Two armies on angled side tabs recede left and right. Rocky hills in three die-cut layers behind. Dramatic red and orange sky on back panel`,
     caption: 'The LORD does not look at outward appearance — He looks at the heart.',
     reference: '1 Samuel 17'
   },
   noah: {
     label: "🕊 Noah's Ark",
-    prompt: "A stunning 3D paper pop-up book spread photographed at eye level, showing Noah's Ark. The great ark rises from the center fold as a tall 3D paper structure with accordion sides, animals pairs visible in cutout windows. Waves made of layered blue cardstock ripple outward in concentric arcs. A rainbow arch of multicolor paper strips spans the full spread. Dove figure on a tab in the foreground holds an olive branch. Clouds of white tissue paper float above. Paper engineering style, intricate paper craft, studio photography lighting, white page base visible, dramatic shadows showing true 3D depth, Hallmark pop-up book quality",
+    scene: `A wooden ark structure rises from the center fold as a 3D box construction, portholes with animal heads visible. Blue wave layers radiate outward in concentric arcs of rippled cardstock. A rainbow of seven colored paper strips arches across the full spread. A white dove figure on a foreground tab holds a tiny paper olive branch. Storm clouds of grey tissue paper part on the back panel`,
     caption: 'And the dove returned with an olive branch — and Noah knew the waters had receded.',
     reference: 'Genesis 8'
   },
   nativity: {
     label: '✨ The Nativity',
-    prompt: "A stunning 3D paper pop-up book spread photographed at eye level, showing the nativity. A stable structure of folded cardstock rises from the center with a star cutout at the peak letting light through. Mary and Joseph figures stand on accordion tabs flanking a manger with baby Jesus. Shepherds and wise men on angled side tabs at different depths. Sheep cut from white fuzzy paper in the foreground. A comet-shaped star of Bethlehem in gold foil paper hangs above. Paper engineering style, intricate paper craft construction, warm candlelight photography, white page base, dramatic shadows showing true 3D depth, Hallmark pop-up book quality",
+    scene: `A stable structure of folded brown cardstock stands in center with a star-shaped hole cut in the roof letting light through. Mary kneels left, Joseph stands right, both on accordion tabs. A manger cradle with baby Jesus sits on the floor tab. Three wise men approach from the right at diminishing scale tabs. Sheep cut from white fuzzy paper in foreground. Deep blue starry sky on back panel with gold foil star of Bethlehem`,
     caption: 'For unto us a child is born — and his name shall be called Wonderful.',
     reference: 'Luke 2:1–20'
   },
   jonah: {
     label: '🐋 Jonah & the Whale',
-    prompt: "A stunning 3D paper pop-up book spread photographed at eye level, showing Jonah and the whale. A massive whale rises from the center fold as a 3D paper sculpture, mouth open wide with Jonah figure visible inside on a tab. Ocean waves of layered blue and turquoise cardstock roll in from all sides at different heights. Seagulls cut from white paper on thin wire tabs float above. A distant shoreline of layered paper rises in the background. Water spray from white tissue paper at the whale's base. Paper engineering style, intricate paper craft, studio photography lighting, white page base visible, deep shadows showing true 3D depth, Hallmark pop-up book quality",
+    scene: `A massive blue whale rises from the center fold, body curving upward, mouth wide open. Inside the mouth on a small tab: Jonah figure with hands raised. Ocean waves of layered blue and turquoise cardstock roll in from all sides at different heights. White tissue paper spray at the whale's base. Two seagulls on thin wire tabs above. A strip of sandy shoreline in the far background panel`,
     caption: 'From inside the fish, Jonah prayed — and the LORD commanded the fish to release him.',
     reference: 'Jonah 2'
   },
   creation: {
     label: '🌍 The Creation',
-    prompt: "A stunning 3D paper pop-up book spread photographed at eye level, showing the seven days of creation. From the center fold rises a layered paper world: sun and moon on opposing accordion arms, a paper tree of life in the center with die-cut leaves, animals on tiered cardstock platforms at different depths, birds on wire tabs in the upper space, fish in rippled blue paper waves below. Stars punched as holes in a dark blue paper sky arch overhead. Paper engineering style, intricate paper craft construction, golden studio lighting, white page base visible, dramatic shadows showing true 3D depth, Hallmark pop-up book quality",
+    scene: `A paper tree of life rises from center fold with die-cut leaves. Sun on a right arm tab, crescent moon on a left arm tab. Animals on tiered platforms: elephant foreground, giraffe midground, birds on upper tabs. Fish in rippled blue paper waves at the base. Stars punched as holes in a dark blue arched sky panel overhead. God rays of gold foil paper fan from upper center`,
     caption: 'And God saw everything that He had made — and it was very good.',
     reference: 'Genesis 1'
   }
@@ -54,29 +58,34 @@ const ASPECTS = [
 ]
 
 const STYLES = [
-  { id: 'hallmark', label: 'Hallmark Classic', mod: '' },
-  { id: 'japanese', label: 'Japanese Washi', mod: ', Japanese washi paper texture, muted earth tones, minimalist paper craft' },
-  { id: 'bright', label: 'Bright & Vivid', mod: ', primary colors, bold outlines, saturated cardstock, children\'s toy aesthetic' },
-  { id: 'gold', label: 'Gold & Ivory', mod: ', ivory paper, gold foil accents, embossed details, luxury stationery aesthetic' }
+  { id: 'classic', label: 'Classic Hallmark', mod: ', bright primary colors, glossy cardstock, Hallmark greeting card quality' },
+  { id: 'washi', label: 'Japanese Washi', mod: ', washi paper texture, muted earth tones, delicate paper grain, Japanese stationery aesthetic' },
+  { id: 'vintage', label: 'Vintage 1970s', mod: ', vintage 1970s paper book, slightly yellowed pages, muted palette, nostalgic toy aesthetic' },
+  { id: 'luxury', label: 'Gold & Ivory', mod: ', ivory paper stock, gold foil embossed details, luxury childrens book, warm studio lighting' }
 ]
 
 export default function Home() {
   const [sceneKey, setSceneKey] = useState('loaves')
-  const [customPrompt, setCustomPrompt] = useState(SCENES.loaves.prompt)
-  const [negPrompt, setNegPrompt] = useState('flat illustration, 2D, digital art, painting, drawing, cartoon, anime, blurry, watercolor, dark, scary, photorealistic people, modern, ugly, distorted, watermark')
+  const [styleId, setStyleId] = useState('classic')
+  const [customPrompt, setCustomPrompt] = useState('')
+  const [negPrompt, setNegPrompt] = useState('flat illustration, 2D painting, digital art, cartoon, anime, drawing, watercolor painting, flat background, no depth, blurry, dark, modern setting, photograph of people, ugly, distorted, watermark, text overlay')
   const [caption, setCaption] = useState(SCENES.loaves.caption)
   const [model, setModel] = useState('runware:100@1')
   const [aspect, setAspect] = useState('1344x768')
-  const [styleId, setStyleId] = useState('hallmark')
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState(null)
   const [error, setError] = useState(null)
   const [elapsed, setElapsed] = useState(null)
 
+  function buildPrompt(sKey, sId) {
+    const scene = SCENES[sKey]
+    const style = STYLES.find(s => s.id === sId)
+    return POPUP_PREFIX + scene.scene + POPUP_SUFFIX + (style?.mod || '')
+  }
+
   function selectScene(key) {
     setSceneKey(key)
-    const stylemod = STYLES.find(s => s.id === styleId)?.mod || ''
-    setCustomPrompt(SCENES[key].prompt + stylemod)
+    setCustomPrompt(buildPrompt(key, styleId))
     setCaption(SCENES[key].caption)
     setImageUrl(null)
     setError(null)
@@ -84,8 +93,12 @@ export default function Home() {
 
   function selectStyle(id) {
     setStyleId(id)
-    const stylemod = STYLES.find(s => s.id === id)?.mod || ''
-    setCustomPrompt(SCENES[sceneKey].prompt + stylemod)
+    setCustomPrompt(buildPrompt(sceneKey, id))
+  }
+
+  // Initialize prompt on first render
+  if (!customPrompt) {
+    setTimeout(() => setCustomPrompt(buildPrompt('loaves', 'classic')), 0)
   }
 
   async function generate() {
@@ -96,6 +109,7 @@ export default function Home() {
 
     const [width, height] = aspect.split('x').map(Number)
     const start = Date.now()
+    const promptToUse = customPrompt || buildPrompt(sceneKey, styleId)
 
     try {
       const res = await fetch('/api/generate', {
@@ -105,13 +119,13 @@ export default function Home() {
           taskType: 'imageInference',
           taskUUID: crypto.randomUUID(),
           model,
-          positivePrompt: customPrompt,
+          positivePrompt: promptToUse,
           negativePrompt: negPrompt,
           width,
           height,
           numberResults: 1,
           steps: model.includes('schnell') ? 4 : 30,
-          CFGScale: 4.5,
+          CFGScale: 5,
           outputType: ['URL'],
           outputFormat: 'PNG'
         }])
@@ -181,12 +195,12 @@ export default function Home() {
           </div>
 
           <div className={styles.card}>
-            <div className={styles.cardTitle}>Scene Prompt</div>
+            <div className={styles.cardTitle}>Full Prompt</div>
             <textarea
               className={styles.textarea}
-              value={customPrompt}
+              value={customPrompt || buildPrompt(sceneKey, styleId)}
               onChange={e => setCustomPrompt(e.target.value)}
-              rows={6}
+              rows={7}
             />
             <label className={styles.label}>Negative Prompt</label>
             <input
